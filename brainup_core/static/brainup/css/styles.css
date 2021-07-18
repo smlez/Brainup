@@ -1,0 +1,111 @@
+#general-content-block{
+    justify-content: center;
+    align-items: center;
+    display: flex;
+}
+
+#collections-list-container{
+    display: flex;
+    flex-wrap:wrap;
+}
+
+.cards-container-div{
+    position: relative;
+    width:200px;
+    height:300px;
+}
+
+#cards-holder-field-div {
+    margin: 5%;
+    text-align:center;
+}
+
+#cards-holder-field-div p{
+    margin-top:15%
+}
+
+.back-card-div{
+    left: 0px;
+    position: absolute;
+    display:flex;
+    top: 0px;
+    height: 100%;
+    width: 100%;
+    z-index: -1;
+    background-color: #F7F7F7;
+    box-shadow: 5px 0 10px 5px #d0d0d0;
+    border-radius:15px;
+    transform: rotate(3deg);
+}
+
+#main-card-div{
+    height: 100%;
+    width: 100%;
+    box-shadow: 5px 0 20px 0px #d0d0d0;
+    background-color: #fff;
+    border-radius:15px;
+}
+
+#main-card-div p{
+    margin-left:60%;
+    margin-top:-20%;
+    color:black;
+    opacity:50%;
+}
+
+#main-card-div h3{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    width:100%;
+    height:100%;
+    text-decoration: none;
+    color: black;
+}
+
+.cards-container-div a{
+    width:100%;
+    height:100%;
+    text-decoration: none;
+}
+
+#index-container{
+    width:100%;
+    flex-direction: column;
+}
+
+#adding-buttons{
+    position:center;
+    align-items: center;
+    justify-content: center;
+    display: flex;
+    flex-direction:row;
+    opacity:60%;
+}
+
+#adding-buttons a{
+    position: center;
+    text-decoration: none;
+    color: black;
+    margin-right: 5%;
+    margin-top:2%;
+}
+
+#side_bar{
+    background_color: black;
+}
+
+#side_bar_elements{
+    width: 100%;
+    background_color: black;
+}
+
+#side_bar_block {
+    width:16%
+}
+
+#side-bar-menu-div{
+    width:14%;
+}
+
+

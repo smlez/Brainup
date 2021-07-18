@@ -1,0 +1,38 @@
+{% extends "base_generic.html" %}
+{% load static %}
+{% block content %}
+
+<link rel="stylesheet" href="{% static 'brainup/css/card.css' %}">
+
+
+{% if collection_obj %}
+<div id="content">
+    <div class="card-container">
+        <div class="card-side">
+            <div class="card-front" onclick="turn_front_func()">
+                <p id="card-front-content"></p>
+            </div>
+            <div class="card-back" onclick="turn_back_func()">
+                <p id="card-back-content"></p>
+            </div>
+        </div>
+    </div>
+    <div id="knowing-buttons-div">
+        <a id="knowing-button-yes" class="knowing-button-el" onclick="answer_on_question(true)">Know!</a>
+        <a id="knowing-button-no" class="knowing-button-el" onclick="answer_on_question(false)">Don't know</a>
+    </div>
+</div>
+{% endif %}
+
+<script>
+        let csrf_token ='{% csrf_token %}'
+        let collection = {{ collection_json|safe}}
+        let collection_url = '{% url 'brainup_api:collections_list' %}'
+
+
+
+
+</script>
+<script src="{% static 'brainup/js/learning.js' %}"></script>
+
+{% endblock %}
