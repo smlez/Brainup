@@ -9,10 +9,10 @@
 <div id="content">
     <div class="card-container">
         <div class="card-side">
-            <div class="card-front" onclick="turn_front_func()">
+            <div class="card-front" onclick="turn_card(true)">
                 <p id="card-front-content"></p>
             </div>
-            <div class="card-back" onclick="turn_back_func()">
+            <div class="card-back" onclick="turn_card(true)">
                 <p id="card-back-content"></p>
             </div>
         </div>
@@ -28,10 +28,6 @@
         let csrf_token ='{% csrf_token %}'
         let collection = {{ collection_json|safe}}
         let collection_url = '{% url 'brainup_api:collections_list' %}'
-
-
-
-
 </script>
 <script src="{% static 'brainup/js/learning.js' %}"></script>
 

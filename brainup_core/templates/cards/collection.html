@@ -3,25 +3,27 @@
 {% load static %}
 
 <link rel="stylesheet" href="{% static 'brainup/css/collection.css' %}">
+<script src="{% static 'brainup/js/collection.js' %}"></script>
 
 <div id="collection-content-div">
-    {% if collection %}
+    {% if collection.cards.all %}
     <h2 style="margin-top:3%;">{{ collection.title }}</h2>
     <p style="opacity:40%">Tap to card to see back side</p>
-    <a id="start_learning_collection_btn"
+    <a class="learning_collection_btn"
        href="{% url 'learning' collection.id %}">Учить</a>
     <div id="collection-cards-div">
         {% for card in collection.cards.all %}
 
         <div class="flip-card-container">
-            <div class="flip-card">
-                <div class="flip-card-front" onclick="turn_front_func()">
-                    <p id="flip-card-front-content">
+            <div class="flip-card" data-card-id="{{ card.id }}">
+                <div class="flip-card-front">
+                    <p class="flip-card-front-content">
                         {{card.front_side}}
                     </p>
+                    <div class="remove-button"></div>
                 </div>
-                <div class="flip-card-back" onclick="turn_back_func()">
-                    <p id="flip-card-back-content">
+                <div class="flip-card-back">
+                    <p class="flip-card-back-content">
                         {{card.back_side}}
                     </p>
                 </div>
@@ -33,11 +35,11 @@
     </div>
 
     <script>
-        var showing_cards = document.querySelectorAll('.flip-card')
+        var showing_cards = document.querySelectorAll('.flip-card-front')
         showing_cards.forEach((card) => {
         card.addEventListener('click', function() {
         card.classList.toggle('is-flipped')})})
-
+        let remove_url = '{% url 'brainup_api:cards_list' %}'
     </script>
     {% else %}
     <h1>There are no cards available</h1>

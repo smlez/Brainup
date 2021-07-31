@@ -2,8 +2,10 @@
 {% load static %}
 
 {% block content %}
+<script src="{% static 'brainup/js/index.js' %}"></script>
 <div id="index-container">
     <div id="adding-buttons">
+
         <a href="{% url 'card_creation' %}">+Создать карточку</a>
         <a href="{% url 'collection_creation' %}">+Создать коллекцию</a>
     </div>
@@ -13,11 +15,8 @@
         <div id="cards-holder-field-div">
 
             <div class="cards-container-div">
-                <div class="back-card-div">
-                    <div class="back-card-div">
-                        <div class="back-card-div"></div>
-                    </div>
-                </div>
+                <div class="back-card-div"></div>
+                <div class="back-card-div"></div>
                 <a href="{% url 'collection' collection.id %}">
                     <div id="main-card-div">
                         <h3>{{collection.title}}</h3>

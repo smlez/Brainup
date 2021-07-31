@@ -1,5 +1,5 @@
 from django.shortcuts import render, redirect
-from django.http import HttpResponse, HttpResponseRedirect
+from django.http import HttpResponseRedirect
 from django.urls import reverse
 
 from .API.serializers import CollectionsSerializer
@@ -90,3 +90,17 @@ def learning(request, collection_id):
                                                            'collection_obj': collection})
     else:
         return redirect('index')
+
+
+#TODO remove if useless
+def filter(request):
+    if request.user.is_authenticated:
+        if request.method == 'GET':
+            collections = CardsCollection.objects.filter\
+                (author=request.user).values('id', 'title')
+            card_template = open('brainup_core/static/brainup/obj_templates/card.html', 'rb')
+            context = {
+                'collections': collections,
+                'card_template': card_template
+            }
+            return render(request, 'filter.html', context)

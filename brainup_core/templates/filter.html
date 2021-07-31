@@ -1,0 +1,39 @@
+{% extends "base_generic.html" %}
+{% load static %}
+{% block content %}
+
+<script>let api_url = '{% url 'brainup_api:cards_list' %}'</script>
+<script src="{% static 'brainup/js/filter.js' %}"></script>
+<link rel="import" href="{% static 'brainup/obj_templates/card.html"/>
+
+<div>
+    {% if collections %}
+    <div id="selectors-block">
+    <select class="list-selector" id="container-selector" onchange="container_changed()">
+        <option>All</option>
+        <option>Unknown</option>
+        <option>Bad knowing</option>
+        <option>Seems known</option>
+        <option>Good knowing</option>
+        <option>Almost remembered</option>
+        <option>Remembered</option>
+    </select>
+    <select class="list-selector" id="collection-selector" onclick="collection_changed()">
+        <option>All</option>
+    </select>
+    </div>
+    <div id="cards-block"></div> <!-- content block -->
+    {% else %}
+    <h2>There is no cards available</h2>
+    {% endif %}
+</div>
+    <link rel="stylesheet" href="{% static 'brainup/css/card.css' %}"/>
+    <script>
+        let collections_list = []
+        {% for collection in collections %}
+        collections_list.push([{{collection.id}}, '{{collection.title}}'])
+        {% endfor %}
+
+    </script>
+
+{% endblock %}
