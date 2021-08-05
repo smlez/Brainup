@@ -5,7 +5,7 @@
 
 
 <link rel="stylesheet" href="{% static 'brainup/css/learn_expired.css' %}">
-<script src="{% static 'brainup/js/learn_expired.js' %}"></script>
+
 <div>
     {% if amount_expired > 0 %}
     <p class="page-text">Всего карт для повторения на сегодня: {{ amount_expired }}</p>
@@ -25,5 +25,13 @@
     {% endif %}
 </div>
 
+<script src="{% static 'brainup/js/learn_expired.js' %}"></script>
+<script>
+        let expired_cards = {{ cards }}
+        let collections_list = []
+        {% for collection in collections %}
+        collections_list.push([{{collection.id}}, '{{collection.title}}'])
+        {% endfor %}
+</script>
 
 {% endblock %}
