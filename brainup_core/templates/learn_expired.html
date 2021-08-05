@@ -1,0 +1,29 @@
+{% extends "base_generic.html" %}
+{% block content %}
+{% load static %}
+
+
+
+<link rel="stylesheet" href="{% static 'brainup/css/learn_expired.css' %}">
+<script src="{% static 'brainup/js/learn_expired.js' %}"></script>
+<div>
+    {% if amount_expired > 0 %}
+    <p class="page-text">Всего карт для повторения на сегодня: {{ amount_expired }}</p>
+    <div id="selector-container">
+        <p class="page-text">Select collection:</p>
+        <select id="collection-selector">
+            <option>All</option>
+        </select>
+    </div>
+    <div id="info-container">
+        <p class="page-text">Карт для повторения в выбранной коллекции: {{ amount_expired }}</p>
+        <button id="start-learn-button">Учить</button>
+    </div>
+
+    {% else %}
+    <p id="congrats-message">Поздравляю! Ты повторил все необходимые карточки на сегодня!</p>
+    {% endif %}
+</div>
+
+
+{% endblock %}

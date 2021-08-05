@@ -23,7 +23,7 @@
     background-image: url('../sources/trashcan-0.png');
     background-size: contain;
     opacity:0;
-    transition: .7s opacity, .7s visibility;
+    transition: .7s opacity;
 }
 
 .remove-button:hover{

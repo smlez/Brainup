@@ -1,21 +1,23 @@
 $('document').ready(function(){
     $('.remove-button').on('click', function(){
         let element = $(this).parents('.flip-card');
-        let card_id = element.data().cardId
-        $.ajax({
-            url: remove_url + card_id,
-            type: 'DELETE',
-            headers: {
-                'X-CSRFToken': getCookie('csrftoken')
-            },
-            success: function(result) {
-                console.log('obj removed!')
-                element.parent().remove()
-            },
-            error: function(err){
-                console.error(err)
-            }
-        })
+        if (confirm(`Are you sure want to delete card ${element.data().front}?`)){
+            $.ajax({
+                url: remove_url + element.data().id,
+                type: 'DELETE',
+                headers: {
+                    'X-CSRFToken': getCookie('csrftoken')
+                },
+                success: function(result) {
+                    console.log('obj removed!')
+                    element.parent().remove()
+                },
+                error: function(err){
+                    console.error(err)
+                }
+            })
+        }
+
     })
 })
 

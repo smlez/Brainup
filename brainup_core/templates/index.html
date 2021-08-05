@@ -3,6 +3,7 @@
 
 {% block content %}
 <script src="{% static 'brainup/js/index.js' %}"></script>
+
 <div id="index-container">
     <div id="adding-buttons">
 
@@ -12,13 +13,13 @@
     {% if collections %}
     <div id="collections-list-container">
         {% for collection in collections %}
-        <div id="cards-holder-field-div">
-
-            <div class="cards-container-div">
+        <div class="cards-holder-field-div">
+            <div class="cards-container-div" data-id="{{ collection.id }}" data-title="{{collection.title}}">
                 <div class="back-card-div"></div>
                 <div class="back-card-div"></div>
+                <div class="remove-button"></div>
                 <a href="{% url 'collection' collection.id %}">
-                    <div id="main-card-div">
+                    <div class="main-card-div">
                         <h3>{{collection.title}}</h3>
                         <p>cards: {{collection.cards.count}}</p>
                     </div>
@@ -26,8 +27,6 @@
             </div>
             <p>{{collection.description}}</p>
         </div>
-
-
     {% endfor %}
     </div>
 
@@ -36,6 +35,9 @@
     <h1>There are no collections available</h1>
     {% endif %}
 </div>
+<script>
+    let collection_api_url = '{% url 'brainup_api:collections_list' %}'
+</script>
 {% endblock %}
 
 

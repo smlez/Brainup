@@ -13,9 +13,8 @@
        href="{% url 'learning' collection.id %}">Учить</a>
     <div id="collection-cards-div">
         {% for card in collection.cards.all %}
-
         <div class="flip-card-container">
-            <div class="flip-card" data-card-id="{{ card.id }}">
+            <div class="flip-card" data-id="{{ card.id }}" data-front="{{ card.front_side }}">
                 <div class="flip-card-front">
                     <p class="flip-card-front-content">
                         {{card.front_side}}
@@ -29,20 +28,18 @@
                 </div>
             </div>
         </div>
-
-
         {% endfor %}
     </div>
-
     <script>
-        var showing_cards = document.querySelectorAll('.flip-card-front')
+        var showing_cards = document.querySelectorAll('.flip-card')
         showing_cards.forEach((card) => {
         card.addEventListener('click', function() {
         card.classList.toggle('is-flipped')})})
         let remove_url = '{% url 'brainup_api:cards_list' %}'
     </script>
     {% else %}
-    <h1>There are no cards available</h1>
+    <h2>There are no cards available in {{collection.title}}</h2>
+    <h3>Do you want to <a href="{% url 'card_creation' %}">create</a> new card?</h3>
     {% endif %}
     {% endblock %}
 </div>

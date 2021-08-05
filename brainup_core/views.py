@@ -1,6 +1,9 @@
+import datetime
+
 from django.shortcuts import render, redirect
 from django.http import HttpResponseRedirect
 from django.urls import reverse
+from django.db.models import F, Q, FilteredRelation
 
 from .API.serializers import CollectionsSerializer
 from .models import Card, CardsCollection
@@ -92,15 +95,36 @@ def learning(request, collection_id):
         return redirect('index')
 
 
+def learn_expired(request):
+    if request.user.is_authenticated:
+        if request.method == 'GET':
+            #TODO рефакторинг запроса к базе без пересбора в новый словарь
+            raw_collections = CardsCollection.objects.filter(author=request.user)\
+                                                     .filter(Q(cards__entry_date__lte=datetime.date.today()-datetime.timedelta(days=0)) | Q(cards__id=None))\
+                                                     .values('id', 'title', 'cards')
+            expired_cards = {}
+            collections = raw_collections.values('id', 'title')
+            number_of_expired = 0
+            for collection in raw_collections:
+                if collection['id'] in expired_cards:
+                    expired_cards[collection['id']].append(collection['cards'])
+                else:
+                    expired_cards[collection['id']] = [collection['cards']]
+                if collection['cards']: number_of_expired+=1
+            context = {
+                'collections': collections,
+                'cards': expired_cards,
+                'amount_expired': number_of_expired
+            }
+            return render(request, 'learn_expired.html', context)
+
+
 #TODO remove if useless
 def filter(request):
     if request.user.is_authenticated:
         if request.method == 'GET':
-            collections = CardsCollection.objects.filter\
-                (author=request.user).values('id', 'title')
-            card_template = open('brainup_core/static/brainup/obj_templates/card.html', 'rb')
+            collections = CardsCollection.objects.filter(author=request.user).values('id', 'title')
             context = {
-                'collections': collections,
-                'card_template': card_template
+                'collections': collections
             }
             return render(request, 'filter.html', context)
