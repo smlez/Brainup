@@ -12,7 +12,7 @@
     <div id="selector-container">
         <p class="page-text">Select collection:</p>
         <select id="collection-selector">
-            <option>All</option>
+            <option value="-1">All</option>
         </select>
     </div>
     <div id="info-container">
@@ -27,6 +27,7 @@
 
 <script src="{% static 'brainup/js/learn_expired.js' %}"></script>
 <script>
+        let amount_expired_cards = {{ amount_expired }}
         let expired_cards = {{ cards }}
         let collections_list = []
         {% for collection in collections %}

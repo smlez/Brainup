@@ -98,10 +98,11 @@ def learning(request, collection_id, *args):
 def learn_expired(request):
     if request.user.is_authenticated:
         if request.method == 'GET':
-            #TODO рефакторинг запроса к базе без пересбора в новый словарь
-            raw_collections = CardsCollection.objects.filter(author=request.user)\
-                                                     .filter(Q(cards__entry_date__lte=datetime.date.today()-datetime.timedelta(days=0)) | Q(cards__id=None))\
-                                                     .values('id', 'title', 'cards')
+            # TODO рефакторинг запроса к базе без пересбора в новый словарь
+            raw_collections = CardsCollection.objects.filter(author=request.user) \
+                .filter(
+                Q(cards__entry_date__lte=datetime.date.today() - datetime.timedelta(days=0))) \
+                .values('id', 'title', 'cards')
             expired_cards = {}
             collections = raw_collections.distinct().values('id', 'title')
             number_of_expired = 0
@@ -109,8 +110,8 @@ def learn_expired(request):
                 if collection['id'] in expired_cards:
                     expired_cards[collection['id']].append(collection['cards'])
                 else:
-                    expired_cards[collection['id']] = [collection['cards']] if collection['cards'] is not None else []
-                if collection['cards']: number_of_expired+=1
+                    expired_cards[collection['id']] = [collection['cards']]
+                if collection['cards']: number_of_expired += 1
             print(expired_cards)
             context = {
                 'collections': collections,
@@ -120,7 +121,7 @@ def learn_expired(request):
             return render(request, 'learn_expired.html', context)
 
 
-#TODO remove if useless
+# TODO remove if useless
 def filter(request):
     if request.user.is_authenticated:
         if request.method == 'GET':
