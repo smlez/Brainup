@@ -18,10 +18,38 @@ $('document').ready(function(){
         } else {
             for (key in expired_cards) {cards_list = cards_list.concat(expired_cards[key]) }
         }
-        console.log(cards_list)
+        let cards_list_json = JSON.stringify(cards_list)
+        $.ajax({
+        url: redirect_url,
+        type: 'POST',
+        headers: {
+            'X-CSRFToken': getCookie('csrftoken')
+        },
+        data: {'cards': cards_list},
+        success: function (data) {
+
+        },
+        error: function (error) {
+           console.log(`ajax error ${error}`);
+        }})
     })
 })
 
 function write_cards_count(element, count){
     element.text(`Карт для повторения в выбранной коллекции: ${count}`)
+}
+
+function getCookie(name) {
+    let cookieValue = null;
+    if (document.cookie && document.cookie !== '') {
+        const cookies = document.cookie.split(';');
+        for (let i = 0; i < cookies.length; i++) {
+            const cookie = cookies[i].trim();
+            if (cookie.substring(0, name.length + 1) === (name + '=')) {
+                cookieValue = decodeURIComponent(cookie.substring(name.length + 1));
+                break;
+            }
+        }
+    }
+    return cookieValue;
 }

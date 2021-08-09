@@ -19,12 +19,3 @@ class CollectionCreationForm(forms.ModelForm):
             'title',
             'description'
         ]
-
-#TODO
-# class CardsFilter(forms.ModelForm):
-#     class Meta:
-#         model = Card
-#         fields = [
-#             'front_side',
-#
-#         ]

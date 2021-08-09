@@ -1,4 +1,5 @@
 import datetime
+from logging import exception
 
 from django.shortcuts import render, redirect
 from django.http import HttpResponseRedirect
@@ -95,7 +96,7 @@ def learning(request, collection_id, *args):
         return redirect('index')
 
 
-def learn_expired(request):
+def show_expired(request):
     if request.user.is_authenticated:
         if request.method == 'GET':
             # TODO рефакторинг запроса к базе без пересбора в новый словарь
@@ -118,7 +119,21 @@ def learn_expired(request):
                 'cards': expired_cards,
                 'amount_expired': number_of_expired
             }
-            return render(request, 'learn_expired.html', context)
+            return render(request, 'show_expired.html', context)
+
+
+def learn_expired(request):
+    if request.user.is_authenticated:
+        if request.method == 'POST':
+            cards = request.POST
+            print(cards)
+            context = {
+                'cards': cards
+            }
+            return redirect('learn_expired', cards=cards)
+        else:
+            if request.method == 'GET':
+                return render(request, 'learn_expired.html')
 
 
 # TODO remove if useless
