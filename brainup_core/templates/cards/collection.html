@@ -9,8 +9,7 @@
     {% if collection.cards.all %}
     <h2 style="margin-top:3%;">{{ collection.title }}</h2>
     <p style="opacity:40%">Tap to card to see back side</p>
-    <a class="learning_collection_btn"
-       href="{% url 'learning' collection.id %}">Учить</a>
+    <a class="learning_collection_btn" id="learn-collection-button" href="{% url 'learning' collection.id %}">Учить</a>
     <div id="collection-cards-div">
         {% for card in collection.cards.all %}
         <div class="flip-card-container">
@@ -36,6 +35,7 @@
         card.addEventListener('click', function() {
         card.classList.toggle('is-flipped')})})
         let remove_url = '{% url 'brainup_api:cards_list' %}'
+        collection_id = {{ collection.id }}
     </script>
     {% else %}
     <h2>There are no cards available in {{collection.title}}</h2>
