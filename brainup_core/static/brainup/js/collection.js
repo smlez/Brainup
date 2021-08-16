@@ -9,6 +9,7 @@ $('document').ready(function(){
                     'X-CSRFToken': getCookie('csrftoken')
                 },
                 success: function(result) {
+                    console.log('obj removed!')
                     element.parent().remove()
                 },
                 error: function(err){

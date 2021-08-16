@@ -7,22 +7,16 @@
 <link rel="stylesheet" href="{% static 'brainup/css/show_expired.css' %}">
 
 <div>
-    {% if collections %}
-    <div class="expired-cards-info-block" style="display:flex; flex-direction:row">
-        <p class="page-text">Всего карт для повторения на сегодня: </p>
-        <p class="page-text" id="number-holder-1"></p>
-    </div>
+    {% if amount_expired > 0 %}
+    <p class="page-text">Всего карт для повторения на сегодня: {{ amount_expired }}</p>
     <div id="selector-container">
         <p class="page-text">Select collection:</p>
         <select id="collection-selector">
-            <option value="-1" data-count="">All</option>
+            <option value="-1">All</option>
         </select>
     </div>
     <div id="info-container">
-        <div class="expired-cards-info-block" style="display:flex; flex-direction:row">
-            <p class="page-text">Карт для повторения в выбранной коллекции: </p>
-            <p class="page-text" id="number-holder-2"></p>
-        </div>
+        <p class="page-text">Карт для повторения в выбранной коллекции: {{ amount_expired }}</p>
         <button id="start-learn-button">Учить</button>
     </div>
 
@@ -34,8 +28,12 @@
 <script src="{% static 'brainup/js/show_expired.js' %}"></script>
 <script>
         let redirect_url = '{% url 'learn_expired' %}'
-        let collections_list = [{{collections|safe}}][0]
-        console.log(collections_list)
+        let amount_expired_cards = {{ amount_expired }}
+        let expired_cards = {{ cards }}
+        let collections_list = []
+        {% for collection in collections %}
+        collections_list.push([{{collection.id}}, '{{collection.title}}'])
+        {% endfor %}
 </script>
 
 {% endblock %}

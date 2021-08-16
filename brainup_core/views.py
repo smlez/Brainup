@@ -1,15 +1,15 @@
 import datetime
+from logging import exception
 
-from django.core.cache import cache
-from django.db.models import Q, Count
-from django.http import HttpResponseRedirect, HttpResponse
 from django.shortcuts import render, redirect
+from django.http import HttpResponseRedirect
 from django.urls import reverse
-from rest_framework.renderers import JSONRenderer
+from django.db.models import F, Q, FilteredRelation
 
 from .API.serializers import CollectionsSerializer
-from .forms import CardCreationForm, CollectionCreationForm
 from .models import Card, CardsCollection
+from .forms import CardCreationForm, CollectionCreationForm
+from rest_framework.renderers import JSONRenderer
 
 
 def index(request):
@@ -82,49 +82,66 @@ def collection_creation(request):
         return redirect('index')
 
 
-def learning(request, collection_id):
+def learning(request, collection_id, *args):
     if request.user.is_authenticated:
         if request.method == 'GET':
-            collection = list(CardsCollection.objects\
-                              .filter(id=collection_id)\
-                              .values('cards__id', 'cards__front_side', 'cards__back_side', 'cards__entry_date', 'cards__knowledge'))
+            collection = CardsCollection.objects.get(id=collection_id)
+            serialized_collection = CollectionsSerializer(collection).data
+            json = JSONRenderer().render(serialized_collection)
             if not collection:
                 return redirect('index')
-            test_colls = collection
-            for card in test_colls:
-                card['cards__entry_date'] = card['cards__entry_date'].isoformat()
-            return render(request, 'cards/learning.html', {'collection': collection})
+            return render(request, 'cards/learning.html', {'collection_json': json.__str__()[2:][:-1],
+                                                           'collection_obj': collection})
     else:
-        return HttpResponse('User is not authenticated!')
+        return redirect('index')
 
 
 def show_expired(request):
     if request.user.is_authenticated:
         if request.method == 'GET':
-            # TODO проверка оптимизированности запроса и их кол-ва
-            full_collections = CardsCollection.objects.filter(author=request.user) \
+            # TODO рефакторинг запроса к базе без пересбора в новый словарь
+            raw_collections = CardsCollection.objects.filter(author=request.user) \
                 .filter(
                 Q(cards__entry_date__lte=datetime.date.today() - datetime.timedelta(days=0))) \
-                .values('id', 'title', 'cards__id', 'cards__front_side', 'cards__back_side', 'cards__entry_date', 'cards__knowledge')
-            amount_expired = {}
-            expired_collections = list(full_collections.distinct().values('id', 'title').annotate(Count('cards__id')))
-            cache.add(str(request.user.id), full_collections, 240)
+                .values('id', 'title', 'cards')
+            expired_cards = {}
+            collections = raw_collections.distinct().values('id', 'title')
+            number_of_expired = 0
+            for collection in raw_collections:
+                if collection['id'] in expired_cards:
+                    expired_cards[collection['id']].append(collection['cards'])
+                else:
+                    expired_cards[collection['id']] = [collection['cards']]
+                if collection['cards']: number_of_expired += 1
+            print(expired_cards)
             context = {
-                'collections': expired_collections
+                'collections': collections,
+                'cards': expired_cards,
+                'amount_expired': number_of_expired
             }
             return render(request, 'show_expired.html', context)
 
 
 def learn_expired(request):
     if request.user.is_authenticated:
-        if request.method == 'GET':
-            id = int(request.GET['id'])
-            collections = cache.get(str(request.user.id))
-            print('cards: ', collections)
-            # for collection in collections:
+        if request.method == 'POST':
+            cards = request.POST
+            print(cards)
             context = {
-
+                'cards': cards
             }
-            return render(request, 'learning.html', context)
-    else:
-        return HttpResponse('User is not authenticated!')
+            return redirect('learn_expired', cards=cards)
+        else:
+            if request.method == 'GET':
+                return render(request, 'learn_expired.html')
+
+
+# TODO remove if useless
+def filter(request):
+    if request.user.is_authenticated:
+        if request.method == 'GET':
+            collections = CardsCollection.objects.filter(author=request.user).values('id', 'title')
+            context = {
+                'collections': collections
+            }
+            return render(request, 'filter.html', context)
