@@ -1,4 +1,4 @@
-let originalCards = collection.cards;
+let originalCards = collection;
 let currentCards = originalCards;
 let unknown_cards = [];
 let isRepeatingAll = true;
@@ -10,7 +10,7 @@ let current_card_id = 0;
 $(document).ready(() => {
     console.log(currentCards)
     currentCards.sort(function (a, b) {
-        if (a.knowledge < b.knowledge)
+        if (a['cards__knowledge'] < b['cards__knowledge'])
             return -1
         else return 1
     })
@@ -29,25 +29,25 @@ function turn_card(isTurnOnce) {
 }
 
 function write_card_data(id) {
-    $('#card-front-content').text(currentCards[id].front_side)
-    $('#card-back-content').text(currentCards[id].back_side)
+    $('#card-front-content').text(currentCards[id]['cards__front_side'])
+    $('#card-back-content').text(currentCards[id]['cards__back_side'])
 }
 
 function answer_on_question(isKnow) {
     let card = currentCards[current_card_id]
     if (isRepeatingAll) {
         if (isKnow) {
-            if (card.knowledge <= 5) {
-                card.knowledge = (Number.parseInt(card.knowledge) + 1).toString()
-                card.entry_date = today.getFullYear() + '-' + (today.getMonth() + 1) + '-' + today.getDate()
+            if (card['cards__knowledge'] <= 5) {
+                card['cards__knowledge'] = (Number.parseInt(card['cards__knowledge']) + 1).toString()
+                card['cards__entry_date'] = today.getFullYear() + '-' + (today.getMonth() + 1) + '-' + today.getDate()
             }
 
         } else {
             unknown_cards.push(card)
-            if (card.knowledge > 3)
-                card.knowledge = (card.knowledge - 2).toString()
+            if (card['cards__knowledge'] > 3)
+                card['cards__knowledge'] = (card['cards__knowledge'] - 2).toString()
             else
-                card.knowledge = "1"
+                card['cards__knowledge'] = "1"
         }
 
     } else {
