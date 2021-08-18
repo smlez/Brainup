@@ -1,13 +1,11 @@
 import datetime
 
 from django.core.cache import cache
-from django.db.models import Q, Count
-from django.http import HttpResponseRedirect, HttpResponse
+from django.db.models import Q, Count, F, Value
+from django.http import HttpResponseRedirect, HttpResponse, Http404
 from django.shortcuts import render, redirect
 from django.urls import reverse
-from rest_framework.renderers import JSONRenderer
 
-from .API.serializers import CollectionsSerializer
 from .forms import CardCreationForm, CollectionCreationForm
 from .models import Card, CardsCollection
 
@@ -89,9 +87,8 @@ def learning(request, collection_id):
                               .filter(id=collection_id)\
                               .values('cards__id', 'cards__front_side', 'cards__back_side', 'cards__entry_date', 'cards__knowledge'))
             if not collection:
-                return redirect('index')
-            test_colls = collection
-            for card in test_colls:
+                raise Http404('Collection not found')
+            for card in collection:
                 card['cards__entry_date'] = card['cards__entry_date'].isoformat()
             return render(request, 'cards/learning.html', {'collection': collection})
     else:
@@ -105,10 +102,16 @@ def show_expired(request):
             full_collections = CardsCollection.objects.filter(author=request.user) \
                 .filter(
                 Q(cards__entry_date__lte=datetime.date.today() - datetime.timedelta(days=0))) \
-                .values('id', 'title', 'cards__id', 'cards__front_side', 'cards__back_side', 'cards__entry_date', 'cards__knowledge')
+                .values('id',
+                        'title',
+                        'cards__id',
+                        'cards__front_side',
+                        'cards__back_side',
+                        'cards__entry_date',
+                        'cards__knowledge')
             amount_expired = {}
             expired_collections = list(full_collections.distinct().values('id', 'title').annotate(Count('cards__id')))
-            cache.add(str(request.user.id), full_collections, 240)
+            cache.add(request.user.id, full_collections, 240)
             context = {
                 'collections': expired_collections
             }
@@ -118,10 +121,16 @@ def show_expired(request):
 def learn_expired(request):
     if request.user.is_authenticated:
         if request.method == 'GET':
-            id = int(request.GET['id'])
-            collections = cache.get(str(request.user.id))
-            print('cards: ', collections)
-            # for collection in collections:
+            id = request.GET['id']
+            cards = cache.get(request.user.id)\
+                         .filter(id=id)\
+                         .annotate(test=Value(F('cards__entry_date')))\
+                         .values('cards__id',
+                                 'cards__front_side',
+                                 'cards__back_side',
+                                 'cards__entry_date',
+                                 'cards__knowledge',
+                                 'test')
             context = {
 
             }
