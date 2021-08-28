@@ -20,7 +20,7 @@ $('document').ready(function(){
     })
 
     $('#start-learn-button').on('click', function(){
-          $.get(redirect_url, {'id': collection_selector.val()})
+          location.href = redirect_url.slice(0,-1)+collection_selector.val()
     })
 })
 

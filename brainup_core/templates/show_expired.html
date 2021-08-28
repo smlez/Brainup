@@ -33,7 +33,7 @@
 
 <script src="{% static 'brainup/js/show_expired.js' %}"></script>
 <script>
-        let redirect_url = '{% url 'learn_expired' %}'
+        let redirect_url = '{% url 'learn_expired' '1'%}'
         let collections_list = [{{collections|safe}}][0]
         console.log(collections_list)
 </script>

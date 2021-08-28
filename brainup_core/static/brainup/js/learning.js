@@ -8,13 +8,11 @@ let current_card_id = 0;
 
 
 $(document).ready(() => {
-    console.log(currentCards)
     currentCards.sort(function (a, b) {
         if (a['cards__knowledge'] < b['cards__knowledge'])
             return -1
         else return 1
     })
-    console.log(currentCards)
     write_card_data(0)
 })
 
@@ -54,7 +52,6 @@ function answer_on_question(isKnow) {
         if (isKnow) currentCards.splice(current_card_id, 1)
     }
     current_card_id++
-    console.log(current_card_id)
     if (current_card_id >= currentCards.length) {
         if (unknown_cards.length === 0) {
             end_game()
@@ -92,25 +89,28 @@ function getCookie(name) {
 }
 
 function end_game() {
-
     alert('Congratulations! You have learned this collection')
-    $.ajax({
-        url: collection_url + collection.id + '/',
-        type: 'PATCH',
-        headers: {
-            'X-CSRFToken': getCookie('csrftoken')
-        },
-        contentType: "application/json",
-        data: JSON.stringify({cards: originalCards}),
-        success: function (data) {
-            console.log(data)
-        },
-        error: function (data) {
-            console.log('error');
-            console.log(data);
-        }
+    originalCards.forEach(card => {
+        Object.keys(card).forEach(key => {
+            console.log(key + " " + card[key])
+        })
     })
-    location.href = '/'
+//    $.ajax({
+//        url: collection_url + originalCards[0]['id'] + '/',
+//        type: 'PATCH',
+//        headers: {
+//            'X-CSRFToken': getCookie('csrftoken')
+//        },
+//        contentType: "application/json",
+//        data: JSON.stringify({cards: originalCards}),
+//        success: function (data) {
+//            console.log(data)
+//        },
+//        error: function (data) {
+//            console.log('error');
+//            console.log(data);
+//        }
+//    })
 }
 
 

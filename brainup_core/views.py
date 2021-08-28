@@ -83,9 +83,10 @@ def collection_creation(request):
 def learning(request, collection_id):
     if request.user.is_authenticated:
         if request.method == 'GET':
-            collection = list(CardsCollection.objects\
-                              .filter(id=collection_id)\
-                              .values('cards__id', 'cards__front_side', 'cards__back_side', 'cards__entry_date', 'cards__knowledge'))
+            collection = list(CardsCollection.objects \
+                              .filter(id=collection_id) \
+                              .values('cards__id', 'cards__front_side', 'cards__back_side', 'cards__entry_date',
+                                      'cards__knowledge'))
             if not collection:
                 raise Http404('Collection not found')
             for card in collection:
@@ -118,22 +119,27 @@ def show_expired(request):
             return render(request, 'show_expired.html', context)
 
 
-def learn_expired(request):
+def learn_expired(request, index):
     if request.user.is_authenticated:
         if request.method == 'GET':
-            id = request.GET['id']
-            cards = cache.get(request.user.id)\
-                         .filter(id=id)\
-                         .annotate(test=Value(F('cards__entry_date')))\
-                         .values('cards__id',
-                                 'cards__front_side',
-                                 'cards__back_side',
-                                 'cards__entry_date',
-                                 'cards__knowledge',
-                                 'test')
+            try:
+                id = int(index)
+            except:
+                raise Exception('Wrong index format was given')
+            cards = cache.get(request.user.id)
+            if id > -1:
+                cards = cards.filter(id=id) \
+                    .values('id',
+                            'cards__id',
+                            'cards__front_side',
+                            'cards__back_side',
+                            'cards__entry_date',
+                            'cards__knowledge')
+            for card in cards:
+                card['cards__entry_date'] = card['cards__entry_date'].isoformat()
             context = {
-
+                'collection': list(cards)
             }
-            return render(request, 'learning.html', context)
+            return render(request, 'cards/learning.html', context)
     else:
         return HttpResponse('User is not authenticated!')

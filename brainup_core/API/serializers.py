@@ -2,7 +2,7 @@ from rest_framework import serializers
 from ..models import CardsCollection, Card
 
 
-class CardsSerializer(serializers.ModelSerializer):
+class CardsListSerializer(serializers.ModelSerializer):
     id = serializers.IntegerField(required=False)
     class Meta:
         model = Card
@@ -10,7 +10,7 @@ class CardsSerializer(serializers.ModelSerializer):
 
 
 class CollectionsSerializer(serializers.ModelSerializer):
-    cards = CardsSerializer(many=True, required=False)
+    cards = CardsListSerializer(many=True, required=False)
 
     def create(self, validated_data):
         cards_data = validated_data.pop('cards', [])
@@ -42,5 +42,18 @@ class CollectionsSerializer(serializers.ModelSerializer):
         model = CardsCollection
         fields = '__all__'
         read_only_fields = [
+            'id',
             'author',
+            'creation_date'
         ]
+
+
+class CardsListEditSerializer(serializers.ModelSerializer):
+    id = serializers.IntegerField(required=False)
+    class Meta:
+        model = Card
+        fields = '__all__'
+        read_only_fields = ['id', 'creation_date']
+
+    def update(self, instance, validated_data):
+        pass
