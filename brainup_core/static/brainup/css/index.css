@@ -1,55 +1,136 @@
 .empty-collection{
+    width: 100%;
+    height: 100%;
+    border: medium dashed gray;
+    border-radius: 15px;
+    opacity:20%;
+    transition: .7s opacity;
+    cursor: pointer;
+}
+
+.cards-container-div {
+    position: relative;
     width: 200px;
     height: 300px;
-    border: medium dashed gray;
-    border-radius: 20px;
-    opacity: 30%;
-    margin-top:8%;
 }
 
-.plus-icon{
-    width:20%;
-    height:20%;
-    position: relative;
-    margin-bottom:30%;
+.cards-container-div:hover .remove-button{
+    opacity:40%;
 }
 
-.empty-collection-info {
+.remove-button{
+    position: absolute;
+    width:22px;
+    height:35px;
+    bottom:2%;
+    left: 4%;
+    cursor: pointer;
+    background-repeat: no-repeat;
+    background-image: url('../sources/trashcan-0.png');
+    background-size: contain;
+    opacity:0;
+    transition: .7s opacity;
+}
+
+.remove-button:hover{
+     background-image: url('../sources/trashcan-1.png');
+}
+
+.cards-holder-field-div {
+    width: 200px;
+    height: 300px;
+    margin: 5%;
+    text-align: center;
+
+}
+
+.back-card-div {
+    left: 0px;
+    position: absolute;
     display: flex;
-    flex-direction: column;
+    top: 0px;
+    height: 100%;
+    width: 100%;
+    z-index: -1;
+    background-color: #F7F7F7;
+    box-shadow: 5px 0 10px 5px #d0d0d0;
+    border-radius: 15px;
 }
 
-.empty-card-content{
-    width:200px;
-    height:300px;
+.main-card-div {
+    height: 100%;
+    width: 100%;
+    box-shadow: 5px 0 20px 0px #d0d0d0;
+    background-color: #fff;
+    border-radius: 15px;
 }
 
-.empty-collection-title{
-    margin-top: -22%;
+.main-card-div p {
+    position:absolute;
+    margin:0;
+    color: black;
+    opacity: 50%;
+    bottom:2%;
+    right:3%;
 }
 
-.empty-card-content{
-    justify-content:center;
+.main-card-div h3 {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    width: 100%;
+    height: 100%;
+    text-decoration: none;
+    color: black;
 }
 
-.main-card-div p{
-    padding-top:135%;
+.cards-container-div a {
+    width: 100%;
+    height: 100%;
+    text-decoration: none;
 }
 
-.empty-card-content p:nth-child(3){
-    margin-left:54%;
-    margin-top: 13%;
+.empty-collection img{
+    width:35px;
+    height:35px;
 }
 
-.empty-card-content p:nth-child(1){
-    margin-top:90%;
+.title-text{
+    margin-bottom:0;
+    margin-top:5%;
 }
 
-.empty-collection-card{
-    opacity:30%;
-    margin-top:-54%;
+.empty-collection:hover{
+    opacity:50%;
+    transition: .7s opacity;
 }
 
-.empty-collection-card:hover{
+.empty-collection div:nth-child(2){
+    margin-top:45%;
+}
+
+.empty-collection div:nth-child(2) p{
+    margin:0;
+}
+
+.empty-collection > p{
+    transition: .7s opacity;
+}
+
+.empty-collection:hover > p{
+    opacity:0;
+    transition: .7s opacity;
+}
+
+.empty-collection:hover div:nth-child(2){
     opacity:100%;
+    transition: .7s opacity;
 }
+
+.empty-collection div:nth-child(2){
+    opacity:0;
+    transition: .7s opacity
+}
+
+
+

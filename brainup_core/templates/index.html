@@ -14,9 +14,8 @@
     <div id="collections-list-container">
         {% for collection in collections %}
             {% if collection.cards.count > 0 %}
-                <div class="cards-holder-field-div filled-collection">
-                    <p>{{ collection.title }}</p>
-                    <div class="cards-container-div" data-id="{{ collection.id }}" data-title="{{collection.title}}">
+                <div class="cards-holder-field-div">
+                    <div class="cards-container-div filled-collection" data-id="{{ collection.id }}" data-title="{{collection.title}}">
                         {% if collection.cards.count > 1 %}
                             <div class="back-card-div"></div>
                         {% endif %}
@@ -32,20 +31,20 @@
                                 <p>cards: {{collection.cards.count}}</p>
                             </div>
                         </a>
+                        <p class="title-text">{{ collection.title }}</p>
                     </div>
                 </div>
             {% else %}
-                <div class="cards-holder-field-div empty-collection">
-                    <p class="empty-collection-title">{{ collection.title }}</p>
-                    <div class="empty-collection-card">
-                        <div class="empty-card-content">
+                <div class="cards-holder-field-div">
+                    <div class="cards-container-div empty-collection">
+                        <p>Collection is empty</p>
+                        <div>
                             <p>Add card</p>
-                            <div class="empty-collection-container">
-                                <img class="plus-icon" src="{% static 'brainup/sources/plus.png' %}">
-                            </div>
-                            <p>cards: {{ collection.cards.count }}</p>
+                            <img src="{% static 'brainup/sources/plus.png' %}">
                         </div>
+                        <div class="remove-button empty-collection-button"></div>
                     </div>
+                    <p class="title-text">{{ collection.title }}</p>
                 </div>
             {% endif %}
         {% endfor %}
