@@ -3,31 +3,52 @@
 
 {% block content %}
 <script src="{% static 'brainup/js/index.js' %}"></script>
+<link rel="stylesheet" href="{% static 'brainup/css/index.css' %}"/>
 
 <div id="index-container">
     <div id="adding-buttons">
-
         <a href="{% url 'card_creation' %}">+Создать карточку</a>
         <a href="{% url 'collection_creation' %}">+Создать коллекцию</a>
     </div>
     {% if collections %}
     <div id="collections-list-container">
         {% for collection in collections %}
-        <div class="cards-holder-field-div">
-            <div class="cards-container-div" data-id="{{ collection.id }}" data-title="{{collection.title}}">
-                <div class="back-card-div"></div>
-                <div class="back-card-div"></div>
-                <div class="remove-button"></div>
-                <a href="{% url 'collection' collection.id %}">
-                    <div class="main-card-div">
-                        <h3>{{collection.title}}</h3>
-                        <p>cards: {{collection.cards.count}}</p>
+            {% if collection.cards.count > 0 %}
+                <div class="cards-holder-field-div filled-collection">
+                    <p>{{ collection.title }}</p>
+                    <div class="cards-container-div" data-id="{{ collection.id }}" data-title="{{collection.title}}">
+                        {% if collection.cards.count > 1 %}
+                            <div class="back-card-div"></div>
+                        {% endif %}
+                        {% if collection.cards.count > 2 %}
+                            <div class="back-card-div"></div>
+                        {% endif %}
+                        {% if collection.cards.count > 4 %}
+                            <div class="back-card-div"></div>
+                        {% endif %}
+                        <div class="remove-button"></div>
+                        <a href="{% url 'collection' collection.id %}">
+                            <div class="main-card-div">
+                                <p>cards: {{collection.cards.count}}</p>
+                            </div>
+                        </a>
                     </div>
-                </a>
-            </div>
-            <p>{{collection.description}}</p>
-        </div>
-    {% endfor %}
+                </div>
+            {% else %}
+                <div class="cards-holder-field-div empty-collection">
+                    <p class="empty-collection-title">{{ collection.title }}</p>
+                    <div class="empty-collection-card">
+                        <div class="empty-card-content">
+                            <p>Add card</p>
+                            <div class="empty-collection-container">
+                                <img class="plus-icon" src="{% static 'brainup/sources/plus.png' %}">
+                            </div>
+                            <p>cards: {{ collection.cards.count }}</p>
+                        </div>
+                    </div>
+                </div>
+            {% endif %}
+        {% endfor %}
     </div>
 
 
@@ -37,6 +58,7 @@
 </div>
 <script>
     let collection_api_url = '{% url 'brainup_api:collections_list' %}'
+
 </script>
 {% endblock %}
 

@@ -1,0 +1,55 @@
+.empty-collection{
+    width: 200px;
+    height: 300px;
+    border: medium dashed gray;
+    border-radius: 20px;
+    opacity: 30%;
+    margin-top:8%;
+}
+
+.plus-icon{
+    width:20%;
+    height:20%;
+    position: relative;
+    margin-bottom:30%;
+}
+
+.empty-collection-info {
+    display: flex;
+    flex-direction: column;
+}
+
+.empty-card-content{
+    width:200px;
+    height:300px;
+}
+
+.empty-collection-title{
+    margin-top: -22%;
+}
+
+.empty-card-content{
+    justify-content:center;
+}
+
+.main-card-div p{
+    padding-top:135%;
+}
+
+.empty-card-content p:nth-child(3){
+    margin-left:54%;
+    margin-top: 13%;
+}
+
+.empty-card-content p:nth-child(1){
+    margin-top:90%;
+}
+
+.empty-collection-card{
+    opacity:30%;
+    margin-top:-54%;
+}
+
+.empty-collection-card:hover{
+    opacity:100%;
+}
