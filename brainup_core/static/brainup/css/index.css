@@ -6,6 +6,13 @@
     opacity:20%;
     transition: .7s opacity;
     cursor: pointer;
+    box-shadow:
+    0 2.8px 2.2px rgba(0, 0, 0, 0.034),
+    0 6.7px 5.3px rgba(0, 0, 0, 0.048),
+    0 12.5px 10px rgba(0, 0, 0, 0.06),
+    0 22.3px 17.9px rgba(0, 0, 0, 0.072),
+    0 41.8px 33.4px rgba(0, 0, 0, 0.086),
+    0 100px 80px rgba(0, 0, 0, 0.12);
 }
 
 .cards-container-div {
@@ -16,6 +23,22 @@
 
 .cards-container-div:hover .remove-button{
     opacity:40%;
+}
+
+.filled-collection:hover .main-card-div{
+    transition: .7s box-shadow;
+    box-shadow:
+    0 2.8px 2.2px rgba(0, 0, 0, 0.034),
+    0 6.7px 5.3px rgba(0, 0, 0, 0.048),
+    0 12.5px 10px rgba(0, 0, 0, 0.06),
+    0 22.3px 17.9px rgba(0, 0, 0, 0.072),
+    0 41.8px 33.4px rgba(0, 0, 0, 0.086),
+    0 60px 80px rgba(0, 0, 0, 0.12);
+}
+
+.empty-collection:active{
+    transform: translateY(4px);
+    box-shadow: 5px 0 20px 0px #d0d0d0;
 }
 
 .remove-button{
@@ -53,16 +76,17 @@
     width: 100%;
     z-index: -1;
     background-color: #F7F7F7;
-    box-shadow: 5px 0 10px 5px #d0d0d0;
+    box-shadow: 5px 0 10px 5px rgba(208,208,208,0.6);
     border-radius: 15px;
 }
 
 .main-card-div {
     height: 100%;
     width: 100%;
-    box-shadow: 5px 0 20px 0px #d0d0d0;
+    box-shadow: 5px 0 10px 5px rgba(208,208,208,0.6);
     background-color: #fff;
     border-radius: 15px;
+    transition: .7s box-shadow;
 }
 
 .main-card-div p {
@@ -106,7 +130,8 @@
 }
 
 .empty-collection div:nth-child(2){
-    margin-top:45%;
+    margin-top:60%;
+    display:none;
 }
 
 .empty-collection div:nth-child(2) p{
@@ -114,22 +139,23 @@
 }
 
 .empty-collection > p{
-    transition: .7s opacity;
+    transition: .7s display;
+    margin-top:70%;
 }
 
 .empty-collection:hover > p{
-    opacity:0;
-    transition: .7s opacity;
+    display:none;
+    transition: .7s display;
 }
 
 .empty-collection:hover div:nth-child(2){
-    opacity:100%;
-    transition: .7s opacity;
+    display:block;
+    transition: .7s display;
 }
 
 .empty-collection div:nth-child(2){
-    opacity:0;
-    transition: .7s opacity
+    display:none;
+    transition: .7s display;
 }
 
 

@@ -15,7 +15,7 @@
         {% for collection in collections %}
             {% if collection.cards.count > 0 %}
                 <div class="cards-holder-field-div">
-                    <div class="cards-container-div filled-collection" data-id="{{ collection.id }}" data-title="{{collection.title}}">
+                    <div class="cards-container-div filled-collection" title="Description: {{ collection.description }}" data-id="{{ collection.id }}" data-title="{{collection.title}}">
                         {% if collection.cards.count > 1 %}
                             <div class="back-card-div"></div>
                         {% endif %}
@@ -36,7 +36,7 @@
                 </div>
             {% else %}
                 <div class="cards-holder-field-div">
-                    <div class="cards-container-div empty-collection">
+                    <div class="cards-container-div empty-collection" title="Description: {{ collection.description }}" data-id="{{ collection.id }}">
                         <p>Collection is empty</p>
                         <div>
                             <p>Add card</p>
