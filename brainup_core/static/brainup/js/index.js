@@ -20,6 +20,9 @@ $('document').ready(function(){
             })
         }
     })
+    $('.empty-collection').on('click', function(){
+        console.log($('.modal-card-creation').css({'display': 'block'}))
+    })
 })
 
 function getCookie(name) {

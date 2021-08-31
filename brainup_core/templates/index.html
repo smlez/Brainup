@@ -42,12 +42,19 @@
                             <p>Add card</p>
                             <img src="{% static 'brainup/sources/plus.png' %}">
                         </div>
-                        <div class="remove-button empty-collection-button"></div>
+                        <div class="remove-button"></div>
                     </div>
                     <p class="title-text">{{ collection.title }}</p>
                 </div>
             {% endif %}
         {% endfor %}
+        <div class="modal-card-creation">
+            <div class="modal-content">
+                <input type="text" size="20" placeholder="Input collection title">
+                <input type="text" placeholder="Input collection description">
+                <button>Создать</button>
+            </div>
+        </div>
     </div>
 
 
