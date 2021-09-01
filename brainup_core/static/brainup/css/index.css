@@ -82,7 +82,7 @@
 }
 
 .modal-card-creation{
-    display:none;
+
     position:fixed;
     left:0;
     top:0;
@@ -93,34 +93,75 @@
 
 }
 
-.modal-content{
+.modal-content-container{
     position:absolute;
-    width:30%;
-    height:50%;
+    display: flex;
+    width:400px;
+    height:500px;
     z-index:15;
     left:40%;
     top:30%;
     background-color:white;
-    border: 1px solid gray;
     border-radius:10px;
-    text-align:center;
+    align-items:center;
     justify-content:center;
 }
 
-.modal-content input{
-    width:50%;
-    height:5%;
-    border: none;
-    box-shadow: 5px 0 10px 5px rgba(208,208,208,0.6);
+
+.close-modal-cross{
+    position:absolute;
+    width:15px;
+    height:15px;
+    cursor:pointer;
+    opacity:70%;
+    top: 5.5%;
+    right:5%;
 }
 
-.modal-header{
+.modal-content-field{
+    text-align:center;
+    border-top: 1px solid rgba(0,0,0,0.2);
+    border-bottom: 1px solid rgba(0,0,0,0.2);
+    width:90%;
+    height:75%;
+    padding-top:10%;
+}
+
+.modal-content-field input{
+    margin-bottom:12%;
+    width:95%;
+    height:10%;
+    text-align:center;
+}
+
+.modal-content-field p{
+    color: rgba(0,0,0,.8);
+    margin-bottom:2%;
+}
+
+.modal-content-field textarea{
+    width:95%;
+    height:50%;
+    margin-bottom:5%;
+    overflow:auto;
+}
+
+.modal-content-container > p{
     position:absolute;
-    width:100%;
-    border-bottom: 1px solid gray;
-    border-top-radius:10px;
-    box-shadow: 5px 0 10px -10px rgba(208,208,208,0.6);
-    top:0%;
+    top:3.5%;
+    font-size:24px;
+}
+
+.modal-content-field button{
+    position:absolute;
+    bottom:4%;
+    left:41%;
+    background-color:#fff;
+    border: 1px solid gray;
+}
+
+.modal-content-field button:hover{
+    background-color:rgba(112, 211, 136, .3);
 }
 
 .main-card-div {

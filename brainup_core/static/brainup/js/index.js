@@ -23,8 +23,8 @@ $('document').ready(function(){
     $('.empty-collection').on('click', function(){
         $('.modal-card-creation').css({'display': 'block'})
     })
-    $('.modal-card-creation').on('click', function(event){
-        if (event.target.className == 'modal-card-creation')
+    $('.modal-card-creation').on('mousedown', function(event){
+        if (event.target.className == 'modal-card-creation' || event.target.className == 'close-modal-cross')
             $(this).css({'display': 'none'})
     })
 })

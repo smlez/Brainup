@@ -49,11 +49,16 @@
             {% endif %}
         {% endfor %}
         <div class="modal-card-creation">
-            <div class="modal-content">
-                <div class="modal-header"></div>
-                <input type="text" size="20" placeholder="Write card front side">
-                <input type="text" placeholder="Write card back side">
-                <button>Создать</button>
+            <div class="modal-content-container">
+                <img class="close-modal-cross" src="{% static 'brainup/sources/cross.png' %}">
+                <p class="modal-title-text">Create card</p>
+                <div class="modal-content-field">
+                    <p>Front side</p>
+                    <input type="text" size="20" >
+                    <p>Back side</p>
+                    <textarea></textarea>
+                    <button>Создать</button>
+                </div>
             </div>
         </div>
     </div>
