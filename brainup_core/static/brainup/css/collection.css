@@ -2,11 +2,13 @@
     display: flex;
     flex-direction: column;
     align-items: center;
+    width:100%;
 }
 
 #collection-cards-div {
     display: flex;
     flex-wrap: wrap;
+    width:100%;
 }
 
 .flip-card:hover .remove-button{
